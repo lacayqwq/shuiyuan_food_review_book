@@ -3,8 +3,8 @@ import json
 import re
 from typing import List, Tuple
 
-from constant import Shuiyuan_Base, Shuiyuan_Raw, UserAgentStr, Shuiyuan_Topic_Json, json_limit
-from utils import read_cookie, make_request, ReqParam, parallel_topic_in_page
+from .constant import Shuiyuan_Base, Shuiyuan_Raw, UserAgentStr, Shuiyuan_Topic_Json, json_limit
+from .utils import read_cookie, make_request, ReqParam, parallel_topic_in_page
 
 
 def match_replace(path:str, filename:str, topic:str):

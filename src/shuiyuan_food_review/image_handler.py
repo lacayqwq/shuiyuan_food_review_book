@@ -1,8 +1,8 @@
 import json
 import re
 import os
-from constant import Shuiyuan_Base, Shuiyuan_Topic_Json, json_limit, image_extensions
-from utils import ReqParam, make_request, parallel_topic_in_page
+from .constant import Shuiyuan_Base, Shuiyuan_Topic_Json, json_limit, image_extensions
+from .utils import ReqParam, make_request, parallel_topic_in_page
 
 def download_image(param: ReqParam, output_dir:str, sha1_name:str):
     """

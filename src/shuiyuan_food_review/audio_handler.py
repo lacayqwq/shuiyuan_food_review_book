@@ -1,20 +1,21 @@
 import concurrent.futures
 import json
 import re
+from bs4 import BeautifulSoup
 from typing import List, Tuple
 
-from constant import Shuiyuan_Base, Shuiyuan_Raw, UserAgentStr, Shuiyuan_Topic_Json, json_limit
-from utils import read_cookie, make_request, ReqParam, parallel_topic_in_page
+from .constant import Shuiyuan_Base, Shuiyuan_Raw, UserAgentStr, Shuiyuan_Topic_Json, json_limit
+from .utils import read_cookie, make_request, ReqParam, parallel_topic_in_page
 
 
-def video_replace(path:str, filename:str, topic:str):
+def audio_replace(path:str, filename:str, topic:str):
     """
     :param path:
     :param filename:
     :param topic:
     :return:
     """
-    print('视频替换中...')
+    print('文件替换中...')
     file = open(path + filename, 'r', encoding='utf-8')
     md_content = file.read()
     @parallel_topic_in_page(topic=topic, limit=json_limit)
@@ -29,11 +30,15 @@ def video_replace(path:str, filename:str, topic:str):
                 url_sha1s = []
                 for post in posts_list:
                     cooked_content = post['cooked']
-                    cooked_match = re.findall(r'class="video-placeholder-container" data-video-src="([^"]+)"', cooked_content)
+                    #r'class="attachment" href="([^"]+)"'
+                    #cooked_match = re.findall(r'<audio preload="metadata" controls=""><source src="([^"]+)"', cooked_content)
+                    soup = BeautifulSoup(cooked_content, 'html.parser')
+                    audio_tags = soup.find_all('audio', attrs={'preload': 'metadata', 'controls': True})
+                    cooked_match = [source['src'] for audio_tag in audio_tags for source in audio_tag.find_all('source')]
                     if cooked_match:
                         url_raw = Shuiyuan_Raw + topic + "/" + str(post['post_number'])
                         raw_content = make_request(param=ReqParam(url_raw)).text
-                        raw_match = re.findall(r'\[.*?\|video\]\(upload://([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)\)',
+                        raw_match = re.findall(r'\[.*?\|audio\]\(upload://([a-zA-Z0-9]+)\.([a-zA-Z0-9]+)\)',
                                                raw_content)
                         raw_match = [t[0] + "." + t[1] for t in raw_match]
                         url_sha1 = [(Shuiyuan_Base + url, sha1) for url, sha1 in zip(cooked_match, raw_match)]

@@ -12,6 +12,9 @@ This project is based on the original `shuiyuan_exporter` repository and keeps t
 
 ## What Is Included
 
+- implementation code is organized under `src/shuiyuan_food_review/`
+- root-level scripts are lightweight wrappers for easier CLI usage
+
 - `main.py`: original topic exporter entrypoint
 - `food_review_pipeline.py`: crawl / extract / normalize / aggregate pipeline
 - `render_merchant_reports.py`: render existing `merchant_book.json` into markdown reports
@@ -29,6 +32,20 @@ This public project intentionally does **not** include:
 - `exports/`
 - local model gateway code or secrets
 - `.env` files or API keys
+
+
+## Project Layout
+
+```text
+.
+?? src/shuiyuan_food_review/    # implementation modules
+?? tooling/                     # packaging / legacy helper files
+?? main.py                      # wrapper for original exporter
+?? food_review_pipeline.py      # wrapper for review pipeline
+?? render_merchant_reports.py   # wrapper for markdown rendering
+?? export_reports.py            # wrapper for zip export
+?? fetch_food_titles.py         # wrapper for quick topic title test
+```
 
 ## Requirements
 

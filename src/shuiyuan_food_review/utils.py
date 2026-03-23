@@ -6,7 +6,7 @@ import json
 from dataclasses import dataclass
 from functools import cache
 from typing import Dict, List, Callable,Any
-from constant import *
+from .constant import *
 from threading import Thread, local
 import requests
 from urllib3.util.retry import Retry
