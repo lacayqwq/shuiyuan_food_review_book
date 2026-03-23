@@ -1,0 +1,14 @@
+﻿__pycache__/
+*.pyc
+.idea/
+.vscode/
+
+cookies.txt
+food_review_data/
+posts/
+exports/
+
+.env
+.env.*
+
+openrouter-free-pool/
